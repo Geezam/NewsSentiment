@@ -1,0 +1,7 @@
+venv/
+notes.txt
+auth.py
+__pycache__/
+csv/*
+index/
+seen_links.txt
