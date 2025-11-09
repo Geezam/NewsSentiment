@@ -17,7 +17,13 @@ def load_seen_links():
     if not os.path.exists(TRACKING_FILE):
         return set()
     with open(TRACKING_FILE, 'r') as f:
-        return set(line.strip() for line in f)
+        links = [line.strip() for line in f]
+    if len(links) > 1000:
+        with open(TRACKING_FILE, 'w') as f:
+            f.write("")
+        return set()
+    else:
+        return set(links)
 
 
 def save_seen_link(link):
@@ -151,7 +157,7 @@ def generate_sentiment_report(BAR_CHAR, MAX_BAR_WIDTH):
         console.print(f"[bold green]Report saved to {output_html_file}"
                       "[/bold green]")
         today_weekday = datetime.datetime.now().weekday()
-        if today_weekday == 5:  # 6
+        if today_weekday == 6:  # 6
             print("It's Sunday. Deploying sentiment report to Netlify")
             deploy_to_netlify(output_html_file, NETLIFY_SITE_ID, NETLIFY_TOKEN)
         else:
